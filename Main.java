@@ -1,5 +1,6 @@
 import model.Meeting;
 import model.User;
+import service.MeetingStorage;
 import service.SchedulerService;
 
 import java.time.LocalDateTime;
@@ -10,7 +11,7 @@ public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         SchedulerService scheduler = new SchedulerService();
-        //List<Meeting> meetings = new ArrayList<>();
+        // List<Meeting> meetings = new ArrayList<>();
         List<Meeting> meetings = MeetingStorage.loadMeetings();
 
         User admin = new User("admin", "admin123", true);
@@ -20,8 +21,9 @@ public class Main {
         while (true) {
             System.out.println("\n====== Smart Meeting Scheduler ======");
             System.out.println("1. Schedule a Meeting");
-            System.out.println("2. View All Meetings");
-            System.out.println("3. Exit");
+            System.out.println("2. Remove a Meeting");
+            System.out.println("3. View All Meetings");
+            System.out.println("4. Exit");
             System.out.print("Choose an option: ");
             int choice = scanner.nextInt();
             scanner.nextLine(); // consume leftover newline
@@ -58,8 +60,25 @@ public class Main {
                 }
 
             } else if (choice == 2) {
-                scheduler.listMeetings(meetings);
+                System.out.println("Enter the number of the meeting to remove:");
+                for (int i = 0; i < meetings.size(); i++) {
+                    System.out.println((i + 1) + ". " + meetings.get(i));
+                }
+                int index = scanner.nextInt();
+                scanner.nextLine(); // Clear newline
+
+                if (index >= 1 && index <= meetings.size()) {
+                    meetings.remove(index - 1);
+                    MeetingStorage.saveMeetings(meetings); // Save the updated list
+                    System.out.println("Meeting removed successfully.");
+                } else {
+                    System.out.println("Invalid meeting number.");
+                }
+                break;
+
             } else if (choice == 3) {
+                scheduler.listMeetings(meetings);
+            } else if (choice == 4) {
                 System.out.println("👋 Exiting... Have a productive day!");
                 break;
             } else {
