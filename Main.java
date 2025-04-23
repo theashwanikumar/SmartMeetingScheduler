@@ -10,7 +10,8 @@ public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         SchedulerService scheduler = new SchedulerService();
-        List<Meeting> meetings = new ArrayList<>();
+        //List<Meeting> meetings = new ArrayList<>();
+        List<Meeting> meetings = MeetingStorage.loadMeetings();
 
         User admin = new User("admin", "admin123", true);
 
@@ -50,6 +51,7 @@ public class Main {
 
                     Meeting meeting = new Meeting(title, startTime, endTime, admin);
                     scheduler.addMeeting(meetings, meeting);
+                    MeetingStorage.saveMeetings(meetings);
 
                 } catch (Exception e) {
                     System.out.println("❌ Invalid date/time format. Please try again.");
