@@ -60,15 +60,16 @@ public class Main {
                 }
 
             } else if (choice == 2) {
+                // 🗑️ Remove a Meeting
                 System.out.println("Enter the number of the meeting to remove:");
                 for (int i = 0; i < meetings.size(); i++) {
                     System.out.println((i + 1) + ". " + meetings.get(i));
                 }
-                int index = scanner.nextInt();
+                int removeIndex = scanner.nextInt();
                 scanner.nextLine(); // Clear newline
 
-                if (index >= 1 && index <= meetings.size()) {
-                    meetings.remove(index - 1);
+                if (removeIndex >= 1 && removeIndex <= meetings.size()) {
+                    meetings.remove(removeIndex - 1);
                     MeetingStorage.saveMeetings(meetings); // Save the updated list
                     System.out.println("Meeting removed successfully.");
                 } else {
