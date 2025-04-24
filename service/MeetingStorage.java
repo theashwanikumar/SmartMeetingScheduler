@@ -15,13 +15,22 @@ public class MeetingStorage {
         try {
             String home = System.getProperty("user.home");
             File appFolder = new File(home + File.separator + FOLDER_NAME);
-            if (!appFolder.exists()) appFolder.mkdirs();
-    
+            if (!appFolder.exists())
+                appFolder.mkdirs();
+
             File saveFile = new File(appFolder, FILE_NAME);
+
+            // Delete the old file if it exists
+            if (saveFile.exists()) {
+                saveFile.delete(); // Delete the old serialized file
+                System.out.println("Old meetings file deleted.");
+            }
+            
+            //load new meetings
             if (saveFile.exists()) {
                 try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(saveFile))) {
                     Object obj = ois.readObject(); // Read object as raw Object
-    
+
                     // Check if the object is of type List<Meeting>
                     if (obj instanceof List<?>) {
                         List<?> tempList = (List<?>) obj;
@@ -29,7 +38,7 @@ public class MeetingStorage {
                         if (!tempList.isEmpty() && tempList.get(0) instanceof Meeting) {
                             @SuppressWarnings("unchecked") // Safe unchecked cast after verification
                             List<Meeting> castedMeetings = (List<Meeting>) tempList;
-                            meetings = castedMeetings;  // Assign to meetings
+                            meetings = castedMeetings; // Assign to meetings
                         } else {
                             System.out.println("Error: The saved data does not contain Meeting objects.");
                         }
@@ -43,7 +52,6 @@ public class MeetingStorage {
         }
         return meetings;
     }
-    
 
     public static void saveMeetings(List<Meeting> meetings) {
         try {
