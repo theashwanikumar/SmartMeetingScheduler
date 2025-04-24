@@ -22,6 +22,7 @@ public class Meeting implements Serializable {
     public LocalDateTime getEndTime() { return endTime; }
     public User getOrganizer() { return organizer; }
 
+    @Override
     public String toString() {
         return "📅 " + title + " | " + startTime + " → " + endTime + " | Organizer: " + organizer.getUsername();
     }
