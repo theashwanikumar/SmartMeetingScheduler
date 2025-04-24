@@ -1,8 +1,14 @@
 package model;
 
-public class User {
+import java.io.Serializable;
+
+public class User implements Serializable {
+    private static final long serialVersionUID = 1L;
     private String username;
+    
+    @SuppressWarnings("unused")
     private String password;
+
     private boolean isAdmin;
 
     public User(String username, String password, boolean isAdmin) {
