@@ -1,8 +1,10 @@
 package model;
 
 import java.time.LocalDateTime;
+import java.io.Serializable;
 
-public class Meeting {
+public class Meeting implements Serializable {
+    private static final long serialVersionUID = 1L;
     private String title;
     private LocalDateTime startTime;
     private LocalDateTime endTime;
